@@ -6,7 +6,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/nilslice/protolock"
+	"github.com/aroch/protolock"
 )
 
 const info = `Track your .proto files and prevent changes to messages and services which impact API compatibilty.

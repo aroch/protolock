@@ -7,7 +7,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/nilslice/protolock"
+	"github.com/aroch/protolock"
 )
 
 // Plugin is an interface that defines the protolock plugin specification.

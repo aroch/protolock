@@ -1,4 +1,4 @@
-module github.com/nilslice/protolock
+module github.com/aroch/protolock
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect

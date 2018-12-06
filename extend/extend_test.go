@@ -3,7 +3,7 @@ package extend
 import (
 	"testing"
 
-	"github.com/nilslice/protolock"
+	"github.com/aroch/protolock"
 )
 
 const fakeData = "test error message"

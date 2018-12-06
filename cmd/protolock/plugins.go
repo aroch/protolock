@@ -9,8 +9,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/nilslice/protolock"
-	"github.com/nilslice/protolock/extend"
+	"github.com/aroch/protolock"
+	"github.com/aroch/protolock/extend"
 )
 
 func runPlugins(pluginList string, report *protolock.Report) (*protolock.Report, error) {

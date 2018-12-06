@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/nilslice/protolock"
-	"github.com/nilslice/protolock/extend"
+	"github.com/aroch/protolock"
+	"github.com/aroch/protolock/extend"
 )
 
 func main() {
