@@ -14,7 +14,10 @@
               }
             ]
           }
-        ]
+        ],
+        "package": {
+          "name": "exclude"
+        }
       }
     },
     {
@@ -31,7 +34,10 @@
               }
             ]
           }
-        ]
+        ],
+        "package": {
+          "name": "exclude"
+        }
       }
     },
     {
@@ -48,7 +54,10 @@
               }
             ]
           }
-        ]
+        ],
+        "package": {
+          "name": "exclude"
+        }
       }
     },
     {
@@ -65,7 +74,10 @@
               }
             ]
           }
-        ]
+        ],
+        "package": {
+          "name": "include"
+        }
       }
     },
     {
@@ -176,7 +188,10 @@
           {
             "path": "testdata/test.proto"
           }
-        ]
+        ],
+        "package": {
+          "name": "test"
+        }
       }
     },
     {
@@ -378,7 +393,10 @@
               }
             ]
           }
-        ]
+        ],
+        "package": {
+          "name": "dataset"
+        }
       }
     }
   ]
