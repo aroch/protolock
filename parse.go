@@ -47,10 +47,6 @@ type Option struct {
 	Aggregated []Option `json:"aggregated,omitempty"`
 }
 
-type Comment struct {
-	Lines []string `json:"lines,omitempty"`
-}
-
 type Message struct {
 	Name          string    `json:"name,omitempty"`
 	Fields        []Field   `json:"fields,omitempty"`
@@ -60,7 +56,6 @@ type Message struct {
 	Filepath      Protopath `json:"filepath,omitempty"`
 	Messages      []Message `json:"messages,omitempty"`
 	Options       []Option  `json:"options,omitempty"`
-	Comment       *Comment  `json:"comment,omitempty"`
 }
 
 type EnumField struct {
@@ -75,7 +70,6 @@ type Enum struct {
 	ReservedIDs   []int       `json:"reserved_ids,omitempty"`
 	ReservedNames []string    `json:"reserved_names,omitempty"`
 	AllowAlias    bool        `json:"allow_alias,omitempty"`
-	Comment       *Comment    `json:"comment,omitempty"`
 }
 
 type Map struct {
@@ -95,16 +89,14 @@ type Service struct {
 	Name     string    `json:"name,omitempty"`
 	RPCs     []RPC     `json:"rpcs,omitempty"`
 	Filepath Protopath `json:"filepath,omitempty"`
-	Comment  *Comment  `json:"comment,omitempty"`
 }
 
 type RPC struct {
-	Name        string   `json:"name,omitempty"`
-	InType      string   `json:"in_type,omitempty"`
-	OutType     string   `json:"out_type,omitempty"`
-	InStreamed  bool     `json:"in_streamed,omitempty"`
-	OutStreamed bool     `json:"out_streamed,omitempty"`
-	Comment     *Comment `json:"comment,omitempty"`
+	Name        string `json:"name,omitempty"`
+	InType      string `json:"in_type,omitempty"`
+	OutType     string `json:"out_type,omitempty"`
+	InStreamed  bool   `json:"in_streamed,omitempty"`
+	OutStreamed bool   `json:"out_streamed,omitempty"`
 }
 
 type Report struct {
@@ -188,10 +180,6 @@ func parseEnum(e *proto.Enum) Enum {
 		Name: e.Name,
 	}
 
-	if e.Comment != nil {
-		enum.Comment = parseComment(e.Comment)
-	}
-
 	for _, v := range e.Elements {
 		if ef, ok := v.(*proto.EnumField); ok {
 			field := EnumField{
@@ -247,35 +235,19 @@ func withService(s *proto.Service) {
 		Name: s.Name,
 	}
 
-	if s.Comment != nil {
-		svc.Comment = parseComment(s.Comment)
-	}
-
 	for _, v := range s.Elements {
 		if r, ok := v.(*proto.RPC); ok {
-			rpc := RPC{
+			svc.RPCs = append(svc.RPCs, RPC{
 				Name:        r.Name,
 				InType:      r.RequestType,
 				OutType:     r.ReturnsType,
 				InStreamed:  r.StreamsRequest,
 				OutStreamed: r.StreamsReturns,
-			}
-
-			if r.Comment != nil {
-				rpc.Comment = parseComment(r.Comment)
-			}
-
-			svc.RPCs = append(svc.RPCs, rpc)
+			})
 		}
 	}
 
 	svcs = append(svcs, svc)
-}
-
-func parseComment(pc *proto.Comment) *Comment {
-	return &Comment{
-		Lines: pc.Lines,
-	}
 }
 
 func withMessage(m *proto.Message) {
@@ -299,10 +271,6 @@ func withMessage(m *proto.Message) {
 func parseMessage(m *proto.Message) Message {
 	msg := Message{
 		Name: m.Name,
-	}
-
-	if m.Comment != nil {
-		msg.Comment = parseComment(m.Comment)
 	}
 
 	for _, v := range m.Elements {
