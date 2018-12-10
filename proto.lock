@@ -1,6 +1,95 @@
 {
   "definitions": [
     {
+      "protopath": "testdata:/:comments.proto",
+      "def": {
+        "enums": [
+          {
+            "name": "Status",
+            "enum_fields": [
+              {
+                "name": "OK",
+                "integer": 1
+              },
+              {
+                "name": "NOT_OK",
+                "integer": 2
+              }
+            ],
+            "comment": {
+              "lines": [
+                " @my_enum_comment: true"
+              ]
+            }
+          }
+        ],
+        "messages": [
+          {
+            "name": "Channel",
+            "fields": [
+              {
+                "id": 1,
+                "name": "id",
+                "type": "int64"
+              },
+              {
+                "id": 2,
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "id": 3,
+                "name": "description",
+                "type": "string"
+              }
+            ],
+            "comment": {
+              "lines": [
+                " @my_message_comment: true"
+              ]
+            }
+          }
+        ],
+        "services": [
+          {
+            "name": "ChannelChanger",
+            "rpcs": [
+              {
+                "name": "Next",
+                "in_type": "NextRequest",
+                "out_type": "Channel",
+                "in_streamed": true,
+                "comment": {
+                  "lines": [
+                    " @my_rpc_comment: true"
+                  ]
+                }
+              },
+              {
+                "name": "Previous",
+                "in_type": "PreviousRequest",
+                "out_type": "Channel",
+                "out_streamed": true
+              }
+            ],
+            "comment": {
+              "lines": [
+                " @my_service_comment: true"
+              ]
+            }
+          }
+        ],
+        "imports": [
+          {
+            "path": "testdata/test.proto"
+          }
+        ],
+        "package": {
+          "name": "test"
+        }
+      }
+    },
+    {
       "protopath": "testdata:/:getProtoFiles:/:exclude:/:test.proto",
       "def": {
         "messages": [

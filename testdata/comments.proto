@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+import "testdata/test.proto";
+
+package test;
+
+// @my_message_comment: true
+message Channel {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+}
+
+// @my_enum_comment: true
+enum Status {
+  OK = 1;
+  NOT_OK = 2;
+}
+
+// @my_service_comment: true
+service ChannelChanger {
+  // @my_rpc_comment: true
+  rpc Next(stream NextRequest) returns (Channel);
+  rpc Previous(PreviousRequest) returns (stream Channel);
+}

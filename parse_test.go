@@ -23,6 +23,34 @@ message Channel {
 }
 `
 
+const protoWithComments = `
+syntax = "proto3";
+
+import "testdata/test.proto";
+
+package test;
+
+//@my_message_comment: true
+message Channel {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+}
+
+//@my_enum_comment: true
+enum Status {
+  OK = 1;
+  NOT_OK = 2;
+}
+
+//@my_service_comment: true
+service ChannelChanger {
+	//@my_rpc_comment: true
+	rpc Next(stream NextRequest) returns (Channel);
+	rpc Previous(PreviousRequest) returns (stream Channel);
+}
+`
+
 const protoWithMessageOptions = `
 syntax = "proto3";
 
@@ -140,6 +168,18 @@ func TestParseIncludingImports(t *testing.T) {
 	assert.NoError(t, err)
 
 	assert.Equal(t, "testdata/test.proto", entry.Imports[0].Path)
+}
+
+func TestParseIncludingComments(t *testing.T) {
+	r := strings.NewReader(protoWithComments)
+
+	entry, err := Parse(r)
+	assert.NoError(t, err)
+
+	assert.Equal(t, "@my_message_comment: true", entry.Messages[0].Comment.Lines[0])
+	assert.Equal(t, "@my_enum_comment: true", entry.Enums[0].Comment.Lines[0])
+	assert.Equal(t, "@my_service_comment: true", entry.Services[0].Comment.Lines[0])
+	assert.Equal(t, "@my_rpc_comment: true", entry.Services[0].RPCs[0].Comment.Lines[0])
 }
 
 func TestParseIncludingMessageOptions(t *testing.T) {
